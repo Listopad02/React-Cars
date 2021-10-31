@@ -1,50 +1,71 @@
+import React, { Component } from 'react';
 import './App.css';
 import Car from './Car/Car';
-import { useState } from 'react';
 
-function App() {
-  const state = {
+class App extends Component {
+
+  state = {
     cars: [
-      {name: 'Ford Focus', year: 2016},
-      {name: 'Audi A7', year: 2019},
-      {name: 'Mazda CX5', year: 2017}
-    ]
+      {name: 'Ford Focus', year: 2018},
+      {name: 'Audi A7', year: 2016},
+      {name: 'Mazda CX5', year: 2010}
+    ],
+    pageTitle: 'Information about cars',
+    showCars: false
   }
 
-  const [ pageTitle, setPageTitle ] = useState('Cars');
-  const changeTitleHandler = newTitle => {
-    setPageTitle(newTitle);
-  }
-
-  const [ showCars, setShowCars ] = useState(false);
-  const toggleCarsHandler = () => {
-    setShowCars(!showCars);
-  }
-
-  const divStyle = {
-    textAlign: 'center',
-  }
-
-  let cars = null;
-
-  if (showCars) {
-    cars = state.cars.map((car, i) => {
-      return (
-        <Car 
-          key={i} name={car.name} year={car.year}
-          onChangeTitle={() => changeTitleHandler(car.name)}
-        />
-      )
+  toggleCarsHandler = () => {
+    this.setState({
+      showCars: !this.state.showCars
     })
   }
 
-  return (
-    <div style={divStyle}>
-      <h2>{pageTitle}</h2>
-      <button onClick={toggleCarsHandler}>Toggle</button>
-      { cars }
-    </div>
-  );
+  onChangeName(name, i) {
+    const car = this.state.cars[i]
+    car.name = name
+    const cars = [...this.state.cars]
+    cars[i] = car
+    this.setState({cars})
+  }
+
+  deleteHandler(i) {
+    const cars = this.state.cars.concat()
+    cars.splice(i, 1)
+
+    this.setState({cars})
+
+  }
+
+  render() {
+    const divStyle = {
+      textAlign: 'center'
+    }
+
+    let cars = null
+
+    if (this.state.showCars) {
+      cars = this.state.cars.map((car, i) => {
+        return (
+          <Car key={i} name={car.name} year={car.year}
+            onDelete={this.deleteHandler.bind(this, i)}
+            onChangeName={e => this.onChangeName(e.target.value, i)}
+          />
+        )
+      })
+    }
+
+    return (
+      <div style={divStyle}>
+        <h1>{this.state.pageTitle}</h1>
+
+        <button
+          onClick={this.toggleCarsHandler}
+        >Show cars / Hide cars</button>
+
+        { cars }
+      </div>
+    );
+  }
 }
 
 export default App;
