@@ -20,27 +20,24 @@ class App extends Component {
     })
   }
 
-  onChangeName(name, i) {
-    const car = this.state.cars[i]
-    car.name = name
-    const cars = [...this.state.cars]
-    cars[i] = car
-    this.setState({cars})
+  onChangeName = (name, i) => {
+    const car = this.state.cars[i];  // получаем машину по индексу
+    car.name = name;   // изменяем имя на новое
+    const cars = [...this.state.cars];  // создаем новый массив и с помощью spread-оператора создаем клон массива cars из state
+    cars[i] = car;   // присваиваем новые машины в массив
+    this.setState({cars});  // обновляем state
   }
 
-  deleteHandler(i) {
-    const cars = this.state.cars.concat()
-    cars.splice(i, 1)
-
-    this.setState({cars})
-
+  deleteHandler = i => {
+    const cars = [...this.state.cars];
+    cars.splice(i, 1);
+    this.setState({cars});
   }
 
   render() {
     const divStyle = {
       textAlign: 'center'
     }
-
     let cars = null
 
     if (this.state.showCars) {
@@ -53,15 +50,10 @@ class App extends Component {
         )
       })
     }
-
     return (
       <div style={divStyle}>
         <h1>{this.state.pageTitle}</h1>
-
-        <button
-          onClick={this.toggleCarsHandler}
-        >Show cars / Hide cars</button>
-
+        <button onClick={this.toggleCarsHandler}>Show cars / Hide cars</button>
         { cars }
       </div>
     );
