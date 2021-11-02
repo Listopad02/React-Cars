@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
 import Car from './Car/Car';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
 
-  state = {
-    cars: [
-      {name: 'Ford Focus', year: 2018},
-      {name: 'Audi A7', year: 2016},
-      {name: 'Mazda CX5', year: 2010}
-    ],
-    pageTitle: 'Information about cars',
-    showCars: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      cars: [
+        {name: 'Ford Focus', year: 2018},
+        {name: 'Audi A7', year: 2016},
+        {name: 'Mazda CX5', year: 2010}
+      ],
+      pageTitle: 'Information about cars',
+      showCars: false
+    }
   }
 
   toggleCarsHandler = () => {
@@ -43,16 +47,18 @@ class App extends Component {
     if (this.state.showCars) {
       cars = this.state.cars.map((car, i) => {
         return (
-          <Car key={i} name={car.name} year={car.year}
-            onDelete={this.deleteHandler.bind(this, i)}
-            onChangeName={e => this.onChangeName(e.target.value, i)}
-          />
+          <ErrorBoundary key={i}>
+            <Car name={car.name} year={car.year}
+              onDelete={this.deleteHandler.bind(this, i)}
+              onChangeName={e => this.onChangeName(e.target.value, i)} />
+          </ErrorBoundary>
+          
         )
       })
     }
     return (
       <div style={divStyle}>
-        <h1>{this.state.pageTitle}</h1>
+        <h1>{this.props.title}</h1>
         <button onClick={this.toggleCarsHandler}>Show cars / Hide cars</button>
         <div style={{
           width: 400,

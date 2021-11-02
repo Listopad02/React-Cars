@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App title={'Cards with cars info'} />
   </React.StrictMode>,
   document.getElementById('root')
 );
