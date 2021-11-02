@@ -2,6 +2,9 @@ import './Car.css'
 import Radium from 'radium'
 
 const Car = props => {
+    // if (Math.random() > 0.7) {
+    //     throw new Error('Car random failed')
+    // }
     const inputClasses = ['input'];
 
     if (props.name !== '') {
