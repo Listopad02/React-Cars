@@ -1,42 +1,36 @@
-import './Car.css'
-import Radium from 'radium'
+import React from 'react';
+import classes from './Car.css'
+import withClass from '../hoc/withClass';
 
-const Car = props => {
-    // if (Math.random() > 0.7) {
-    //     throw new Error('Car random failed')
-    // }
-    const inputClasses = ['input'];
+class Car extends React.Component {
 
-    if (props.name !== '') {
-        inputClasses.push('green');
+  render() {
+    const inputClasses = ['input'] //изменил массив
+
+    if (this.props.name !== '') {
+      inputClasses.push('green')  //пушим вот так 
     } else {
-        inputClasses.push('red');
-    }
-    if (props.name.length > 4) {
-        inputClasses.push('bold');
+      inputClasses.push('red')
     }
 
-    const style = {
-        border: '1px solid #ccc', 
-        boxShadow: '0 4px 5px 0 rgba(0, 0, 0, .14)',
-        ':hover': {
-            border: '1px solid #aaa', 
-            boxShadow: '0 4px 15px 0 rgba(0, 0, 0, .25)',
-            cursor: 'pointer'
-        }
+    if (this.props.name.length > 4) {
+      inputClasses.push('bold')
     }
 
     return (
-        <div className="Car" style={style}>
-            <h3>Сar name: {props.name}</h3>
-            <p>Year: <strong>{props.year}</strong></p>
-            <input type="text" 
-                   onChange={props.onChangeName} 
-                   value={props.name} 
-                   className={inputClasses.join(' ')}
-            />
-            <button onClick={props.onDelete}>Delete</button>
-        </div>
+      <React.Fragment>
+        <h3>Сar name: {this.props.name}</h3>
+        <p>Year: <strong>{this.props.year}</strong></p>
+        <input
+          type="text"
+          onChange={this.props.onChangeName}
+          value={this.props.name}
+          className={inputClasses.join(' ')}
+        />
+        <button onClick={this.props.onDelete}>Delete</button>
+      </React.Fragment>
     )
+  }
 }
-export default Radium(Car);
+
+export default withClass(Car, 'Car'); // класс в кавычках
