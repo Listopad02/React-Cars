@@ -1,14 +1,14 @@
 import React from 'react';
-import classes from './Car.css'
+import './Car.css'
 import withClass from '../hoc/withClass';
 
 class Car extends React.Component {
 
   render() {
-    const inputClasses = ['input'] //изменил массив
+    const inputClasses = ['input']
 
     if (this.props.name !== '') {
-      inputClasses.push('green')  //пушим вот так 
+      inputClasses.push('green')
     } else {
       inputClasses.push('red')
     }
@@ -33,4 +33,4 @@ class Car extends React.Component {
   }
 }
 
-export default withClass(Car, 'Car'); // класс в кавычках
+export default withClass(Car, 'Car');
